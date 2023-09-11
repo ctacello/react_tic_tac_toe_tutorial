@@ -6,31 +6,47 @@ export default class Board extends React.Component {
     renderSquare(i) {
         return (
             <Square 
+                key={"square_" + i}
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)} 
             />
         );
     }
 
-    render() {
+    renderSquares(n) {
+        let squares = [];
 
+        for (let i = n; i < n + 3; i++) {
+            squares.push(this.renderSquare(i));
+        }
+
+        return squares;
+    }
+
+    renderRow(i) {
+        return (
+            <div key={"row_" + i} className="board-row">
+                {this.renderSquares(i)}
+            </div>
+        );
+    }
+
+    renderRows(n) {
+        let rows = [];
+
+        for (let i = 0; i < n; i++) {
+            if (i % 3 === 0) {
+                rows.push(this.renderRow(i));
+            }
+        }
+
+        return rows;
+    }
+
+    render() {
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {this.renderRows(9)}
             </div>
         );
     }
